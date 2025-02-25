@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF8654"
+    android:backgroundTint="#FF8654"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/text_score"
+        android:layout_width="153dp"
+        android:layout_height="75dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/text_score_text"
+        android:textAlignment="center"
+        android:textColor="#FF1A00"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextSizeCheck" />
+
+    <Button
+        android:id="@+id/btn_tap"
+        android:layout_width="201dp"
+        android:layout_height="93dp"
+        android:layout_marginBottom="56dp"
+        android:background="#BA1414"
+        android:backgroundTint="#A61B1B"
+        android:shadowColor="#FF0000"
+        android:text="@string/BTN_TAP_text"
+        android:textColor="#FFAE00"
+        android:textColorHighlight="#CE1111"
+        android:textColorHint="#504343"
+        android:textColorLink="#A98282"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="#572E2E"
+        app:strokeColor="#BD1E1E" />
+
+    <TextView
+        android:id="@+id/text_inc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_inc_text"
+        android:textColor="#FF1A00"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_tap" />
+
+    <ImageView
+        android:id="@+id/btn_boost"
+        android:layout_width="95dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#FF2600"
+        android:rotationX="0"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ads_audience_boost_svgrepo_com" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

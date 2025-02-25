@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="boost_icon_size">100dp</dimen>
+    <dimen name="boost_padding">15dp</dimen>
+</resources>
