@@ -1,5 +1,6 @@
 package com.example.fvbh
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
@@ -7,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.fvbh.boosts.BoostView
+import com.example.fvbh.boosts.models.ActiveBoost
 
 class BoostActivity : AppCompatActivity() {
+    private lateinit var shared: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -19,19 +23,18 @@ class BoostActivity : AppCompatActivity() {
             insets
         }
 
+        shared = getSharedPreferences("main", 0)
+
         findViewById<LinearLayout>(R.id.boosts_layout).removeAllViews()
+        BoostView.updateCountMoney(shared.getLong("score", 0))
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.boosts_layout, BoostView.newInstance(
-            "Буст +", 1, 100, 1, 0
-        ), "boost 0")
-        transaction.add(R.id.boosts_layout, BoostView.newInstance(
-            "Буст +-", 2, 500, 50, 1
-        ), "boost 1")
-        transaction.add(R.id.boosts_layout, BoostView.newInstance(
-            "Бусти", 3, 1000, 100, 2
-        ), "boost 2")
-
-
+        val boost_count = resources.getInteger(R.integer.boost_count)
+        for (i in 0 until boost_count) {
+            val boost = ActiveBoost.load(i);
+            transaction.add(R.id.boosts_layout, BoostView.newInstance(
+               boost.title, boost.level, boost.price, boost.inc, boost.id
+            ), "boost $i")
+        }
         transaction.commit()
     }
 }

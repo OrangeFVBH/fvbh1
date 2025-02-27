@@ -5,7 +5,7 @@ import com.example.fvbh.boosts.AbsBoost
 import kotlin.math.ceil
 
 
-class ActiveBoost: AbsBoost() {
+open class ActiveBoost: AbsBoost() {
     var inc: Long = 0
 
     companion object{
@@ -19,6 +19,28 @@ class ActiveBoost: AbsBoost() {
             this.shared = shared
             sharedEditor = shared.edit()
         }
+
+        fun load(id: Int) : ActiveBoost {
+
+            val getted_title = shared?.getString("boost_${id}_title", null)
+            if (getted_title != null){
+                val instance = ActiveBoost()
+
+                instance.id = id
+                instance.title = getted_title
+                instance.inc = shared?.getLong("boost_${id}_inc", 1)!!
+                instance.price = shared?.getLong("boost_${id}_price", 1)!!
+                instance.level = shared?.getInt("boost_${id}_level", 0)!!
+                return instance
+            } else{
+                return when (id) {
+                    0 -> DefaultActiveBoost0
+                    1 -> DefaultActiveBoost1
+                    2 -> DefaultActiveBoost2
+                    else -> throw Exception("Boost with id=$id not found")
+                }
+            }
+        }
     }
 
     override fun buy() {
@@ -29,19 +51,7 @@ class ActiveBoost: AbsBoost() {
         save()
     }
 
-    override fun load(id: Int) {
-        this.id = id
 
-        val getted_title = shared?.getString("boost_${id}_title", null)
-        if (getted_title != null){
-            title = getted_title
-            inc = shared?.getLong("boost_${id}_inc", 1)!!
-            price = shared?.getLong("boost_${id}_price", 1)!!
-            level = shared?.getInt("boost_${id}_level", 0)!!
-        } else{
-            //TODO
-        }
-    }
 
     override fun save() {
         sharedEditor?.putString("boost_${id}_title", title)
