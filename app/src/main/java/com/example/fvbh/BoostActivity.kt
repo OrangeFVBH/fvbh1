@@ -31,9 +31,7 @@ class BoostActivity : AppCompatActivity() {
         val boost_count = resources.getInteger(R.integer.boost_count)
         for (i in 0 until boost_count) {
             val boost = ActiveBoost.load(i);
-            transaction.add(R.id.boosts_layout, BoostView.newInstance(
-               boost.title, boost.level, boost.price, boost.inc, boost.id
-            ), "boost $i")
+            transaction.add(R.id.boosts_layout, BoostView.newInstance(boost.id), "boost $i")
         }
         transaction.commit()
     }

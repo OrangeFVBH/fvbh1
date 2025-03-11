@@ -10,28 +10,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.example.fvbh.R
-import java.util.logging.Level
+import com.example.fvbh.boosts.models.ActiveBoost
 
-private const val ARG_PARAM_TITLE = "title"
-private const val ARG_PARAM_LEVEL = "level"
-private const val ARG_PARAM_PRICE = "price"
-private const val ARG_PARAM_INC = "inc"
 private const val ARG_PARAM_ID = "id"
 
 class BoostView : Fragment() {
-    private var title: String? = null
-    private var level: Int? = null
-    private var price: Long? = null
-    private var inc: Long? = null
-    private var id: Int? = null
+    private var boost: ActiveBoost? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = arguments?.getString(ARG_PARAM_TITLE)
-        level = arguments?.getInt(ARG_PARAM_LEVEL)
-        price = arguments?.getLong(ARG_PARAM_PRICE)
-        inc = arguments?.getLong(ARG_PARAM_INC)
-        id = arguments?.getInt(ARG_PARAM_ID)
+        val id = arguments?.getInt(ARG_PARAM_ID)
+        if (id != null) {
+            boost = ActiveBoost.load(id)
+        }
     }
 
     override fun onCreateView(
@@ -49,27 +40,37 @@ class BoostView : Fragment() {
         }
 
         @JvmStatic
-        fun newInstance(title: String, level: Int, price: Long, inc: Long, id: Int) =
+        fun newInstance(id: Int) =
             BoostView().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM_TITLE, title)
-                    putInt(ARG_PARAM_LEVEL, level)
-                    putLong(ARG_PARAM_PRICE, price)
-                    putLong(ARG_PARAM_INC, inc)
                     putInt(ARG_PARAM_ID, id)
                 }
             }
     }
 
+    private fun updateUI() {
+        view?.findViewById<TextView>(R.id.boost_name)?.text = boost?.title
+        view?.findViewById<TextView>(R.id.boost_reward)?.text = "+ ${boost?.inc} $"
+        view?.findViewById<TextView>(R.id.boost_level)?.text = "lvl ${boost?.level}"
+        view?.findViewById<TextView>(R.id.boost_price)?.text = "${boost?.price} $"
+        view?.findViewById<View>(R.id.boost_hide)?.isVisible = boost?.price!! > countMoney
+
+
+        val imageId = resources.getIdentifier("boost_${boost?.id}", "drawable", activity?.packageName)
+        if (imageId != 0) {
+            view?.findViewById<ImageView>(R.id.boost_img)?.setImageResource(imageId)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-        view?.findViewById<TextView>(R.id.boost_name)?.text = title
-        view?.findViewById<TextView>(R.id.boost_reward)?.text = "+ $inc $"
-        view?.findViewById<TextView>(R.id.boost_level)?.text = "lvl $level"
-        view?.findViewById<TextView>(R.id.boost_price)?.text = "$price $"
-        view?.findViewById<View>(R.id.boost_hide)?.isVisible = price!! > countMoney
+        view?.findViewById<TextView>(R.id.boost_name)?.text = boost?.title
+        view?.findViewById<TextView>(R.id.boost_reward)?.text = "+ ${boost?.inc} $"
+        view?.findViewById<TextView>(R.id.boost_level)?.text = "lvl. ${boost?.level}"
+        view?.findViewById<TextView>(R.id.boost_price)?.text = "${boost?.price} $"
+        view?.findViewById<View>(R.id.boost_hide)?.isVisible = boost?.price!! > countMoney
 
-        val imageId = resources.getIdentifier("boost_$id", "drawable", activity?.packageName)
+        val imageId = resources.getIdentifier("boost_${boost?.id}", "drawable", activity?.packageName)
         if (imageId != 0) {
             view?.findViewById<ImageView>(R.id.boost_img)?.setImageResource(imageId)
         }
