@@ -64,15 +64,11 @@ class BoostView : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        view?.findViewById<TextView>(R.id.boost_name)?.text = boost?.title
-        view?.findViewById<TextView>(R.id.boost_reward)?.text = "+ ${boost?.inc} $"
-        view?.findViewById<TextView>(R.id.boost_level)?.text = "lvl. ${boost?.level}"
-        view?.findViewById<TextView>(R.id.boost_price)?.text = "${boost?.price} $"
-        view?.findViewById<View>(R.id.boost_hide)?.isVisible = boost?.price!! > countMoney
+        updateUI()
 
-        val imageId = resources.getIdentifier("boost_${boost?.id}", "drawable", activity?.packageName)
-        if (imageId != 0) {
-            view?.findViewById<ImageView>(R.id.boost_img)?.setImageResource(imageId)
+        view?.setOnClickListener{
+            boost?.buy()
+            updateUI()
         }
     }
 }
