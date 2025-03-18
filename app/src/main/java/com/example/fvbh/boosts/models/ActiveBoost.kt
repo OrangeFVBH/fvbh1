@@ -44,6 +44,8 @@ open class ActiveBoost: AbsBoost() {
     }
 
     override fun buy() {
+        if (shared!!.getLong("score", 0) < price)
+            return
         apply()
         level++
         price = ceil(price * PRICE_COEFFICIENT).toLong()
@@ -62,11 +64,10 @@ open class ActiveBoost: AbsBoost() {
     }
 
     override fun apply() {
-        val oldInc = shared?.getLong("inc", 1)
-        if (oldInc != null) {
-            sharedEditor?.putLong("inc", oldInc + inc)
-            sharedEditor?.commit()
-        }
+        val oldInc = shared?.getLong("inc", 1) ?: 1
+        val oldScore:Long = shared?.getLong("score", 0) ?: 0
+        sharedEditor?.putLong("inc", oldInc + inc)
+        sharedEditor?.putLong("score", oldScore - price)
+        sharedEditor?.commit()
     }
-
 }

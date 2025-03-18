@@ -46,17 +46,19 @@ class MainActivity : AppCompatActivity() {
 
         btn_tap.setOnClickListener{ add()}
         btn_boost.setOnClickListener{
+            save()
             startActivity(Intent(this, BoostActivity::class.java))
         }
     }
 
     private fun add(){
         score += inc
-        onResume()
+        text_score.text = String.format(getString(R.string.text_score_text), score)
     }
 
     override fun onResume(){
         super.onResume()
+        load()
 
         text_score.text = String.format(getString(R.string.text_score_text), score)
         text_inc.text = String.format(getString(R.string.text_inc_text), inc)
