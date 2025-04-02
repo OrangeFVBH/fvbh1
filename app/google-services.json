@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "474020152586",
+    "project_id": "orange-c1e1e",
+    "storage_bucket": "orange-c1e1e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474020152586:android:0cf8ece990f3c9b131e6f3",
+        "android_client_info": {
+          "package_name": "com.example.fvbh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkwPZgZgnrL2cXL2cCjeTGjv7iD_-4Ti0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
